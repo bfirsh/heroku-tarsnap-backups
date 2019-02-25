@@ -41,6 +41,23 @@ if [ ! -z "$DATABASE_URL" ]; then
     echo
 fi
 
+if [ ! -z "$BUCKETEER_BUCKET_NAME" ]; then
+    export AWS_ACCESS_KEY_ID="$BUCKETEER_AWS_ACCESS_KEY_ID"
+    export AWS_SECRET_ACCESS_KEY="$BUCKETEER_AWS_SECRET_ACCESS_KEY"
+    export AWS_DEFAULT_REGION="$BUCKETEER_AWS_REGION"
+    S3_SOURCE="s3-data"
+    mkdir -p $S3_SOURCE
+    echo ">>> Dumping S3 bucket at $BUCKETEER_BUCKET_NAME..."
+    aws s3 sync s3://$BUCKETEER_BUCKET_NAME $S3_SOURCE/
+    echo
+
+    echo ">>> Backing up S3 to Tarsnap..."
+    tarsnapper -o keyfile $TARSNAP_KEY_PATH -o cachedir $TARSNAP_CACHE_DIR --sources "$S3_SOURCE" --target "$APP_NAME/s3-\$date" --deltas $TARSNAPPER_DELTAS - make
+    echo
+fi
+
+echo "Done!"
+
 
 
 

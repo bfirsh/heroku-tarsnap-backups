@@ -51,6 +51,10 @@ To connect Heroku Postgres:
 
     $ heroku addons:attach your-app::DATABASE
 
+To connect Bucketeer S3 buckets:
+
+    $ heroku addons:attach your-app::BUCKETEER
+
 ### Testing
 
 To test everything works, run:

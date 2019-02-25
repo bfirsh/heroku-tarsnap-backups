@@ -3,6 +3,6 @@ RUN apk add --no-cache \
     bash \
     postgresql \
     tarsnap
-RUN pip install tarsnapper==0.4.0
+RUN pip install tarsnapper==0.4.0 awscli
 ADD . /app
 WORKDIR /app
