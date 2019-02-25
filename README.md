@@ -97,6 +97,6 @@ Then, you can save a tarball of an archive with this command:
 
 ### `TARSNAPPER_DELTAS`
 
-Default: `1h 1d 7d 30d 360d 18000d`
+Default: `1h 7d 30d 360d 18000d`
 
 This option allows you to customise how many backups are kept when they are rotated. The default means keep hourly backups for a week, weekly for a month, monthly for a year, yearly forever. See [the Tarsnapper docs for more details](https://github.com/miracle2k/tarsnapper).
