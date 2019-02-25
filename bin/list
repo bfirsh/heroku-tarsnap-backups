@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+if [ -z "$TARSNAP_KEY" ]; then
+    >&2 echo "\$TARSNAP_KEY must be set"
+    exit 1
+fi
+
+# Set up Tarsnap
+TARSNAP_KEY_PATH=tarsnap.key
+echo "$TARSNAP_KEY" > $TARSNAP_KEY_PATH
+
+tarsnap --keyfile $TARSNAP_KEY_PATH --list-archives

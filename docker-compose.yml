@@ -1,0 +1,5 @@
+version: "3.5"
+services:
+  heroku-tarsnap:
+    build: .
+    command: bin/backup

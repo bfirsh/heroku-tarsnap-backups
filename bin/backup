@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+# Required user configuration
+if [ -z "$DATABASE_URL" ] && [ -z "$BUCKETEER_BUCKET_NAME" ]; then
+    >&2 echo "Nothing to backup - neither \$DATABASE_URL nor \$BUCKETEER_BUCKET_NAME are set."
+    exit 1
+fi
+if [ -z "$TARSNAP_KEY" ]; then
+    >&2 echo "\$TARSNAP_KEY must be set"
+    exit 1
+fi
+
+# Optional user configuration
+APP_NAME=${APP_NAME:-heroku}
+# Hourly for a week, weekly for a month, monthly for a year, yearly forever.
+TARSNAPPER_DELTAS=${TARSNAPPER_DELTAS:-1h 1d 7d 30d 360d 18000d}
+
+# Set up Tarsnap
+TARSNAP_KEY_PATH=tarsnap.key
+echo "$TARSNAP_KEY" > $TARSNAP_KEY_PATH
+TARSNAP_CACHE_DIR=tarsnap-cache
+
+# Tarsnap keeps a cache of what is stored. This is not designed to be ephemeral, but
+# we have to way of storing this on Heroku, so just rebuild every time.
+# See https://www.tarsnap.com/cachedir.html for more details.
+echo ">>> Building local Tarsnap cache..."
+tarsnap --keyfile $TARSNAP_KEY_PATH --cachedir=$TARSNAP_CACHE_DIR --fsck
+echo
+
+if [ ! -z "$DATABASE_URL" ]; then
+    echo ">>> Dumping Postgres DB at $DATABASE_URL..."
+    POSTGRES_SOURCE="postgres-data"
+    mkdir -p $POSTGRES_SOURCE
+    # No compression. See https://www.tarsnap.com/tips.html#compression
+    pg_dump -Fc --no-acl --no-owner --compress=0 $DATABASE_URL > $POSTGRES_SOURCE/postgres.dump
+    echo
+
+    echo ">>> Backing up Postgres DB to Tarsnap..."
+    tarsnapper -o keyfile $TARSNAP_KEY_PATH -o cachedir $TARSNAP_CACHE_DIR --sources "$POSTGRES_SOURCE" --target "$APP_NAME/postgres-\$date" --deltas $TARSNAPPER_DELTAS - make
+    echo
+fi
+
+
+
+
