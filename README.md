@@ -37,11 +37,13 @@ You then need to generate a Tarsnap key with the Tarsnap client. On Mac, run `br
 
     $ tarsnap-keygen --keyfile tarsnap.key --user your-tarsnap-account@example.com --machine your-app-backup
 
-This will create a `tarsnap.key` file. **Keep this safe. If you lose this file, you can't recover any of your backups.**
+This will create a `tarsnap.key` file. **Keep this key safe. If you lose this file, you can't recover any of your backups.**
 
 Next, upload this key to your Heroku app:
 
     $ heroku config:add TARSNAP_KEY="$(cat tarsnap.key)"
+
+(Note: Even though this key is on Heroku, you must still keep a local copy too. If Heroku have some kind of catastrophic failure, you won't be able to recover your key, therefore you won't be able to recover your backups. This defeats the whole point of having an off-site backup!)
 
 ### Connecting up your app
 
