@@ -13,7 +13,7 @@ fi
 
 # Optional user configuration
 APP_NAME=${APP_NAME:-heroku}
-# Hourly for a week, weekly for a month, monthly for a year, yearly forever.
+# Hourly for a day, daily for a week, weekly for a month, monthly for a year, yearly forever.
 TARSNAPPER_DELTAS=${TARSNAPPER_DELTAS:-1h 1d 7d 30d 360d 18000d}
 
 # Set up Tarsnap
