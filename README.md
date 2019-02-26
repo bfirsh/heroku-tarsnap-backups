@@ -2,7 +2,7 @@
 
 Heroku has built-in backups for Postgres. That's fine if you accidentally delete some data and want to restore it. But what if you forget to update your credit card and Heroku deletes all your data? Or, what if Heroku screw up somehow?
 
-This app lets you make off-site backups of Heroku apps to Tarsnap. It runs as a "sidecar" app alongside another Heroku app. You connect any Postgres databases or Bucketeer S3 buckets you want backed up, then the app will automatically backup everything inside them and rotate the backups.
+This app lets you make off-site backups of Heroku apps to Tarsnap. It runs as a "sidecar" app alongside another Heroku app. You connect any Postgres databases or Bucketeer S3 buckets you want backed up, then the app will automatically back up everything inside them. It also deletes rotates the backups so you don't spend loads of money storing old ones.
 
 ## Installing
 
