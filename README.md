@@ -47,7 +47,9 @@ Next, upload this key to your Heroku app:
 
 ### Connecting up your app
 
-You now need to connect the app you want to back up to the sidecar backup container. These commands assume your origin app is called `your-app`. Substitute as appropriate.
+You now need to connect the app you want to back up to the sidecar backup app you have created. [Heroku lets you connect addons to multiple apps, so that is how we are going to achieve this.](https://devcenter.heroku.com/articles/managing-add-ons#using-the-dashboard-attaching-an-add-on-to-another-app)
+
+These commands assume the app you want to back up is called `your-app`. Substitute as appropriate.
 
 To connect Heroku Postgres:
 
