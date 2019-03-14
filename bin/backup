@@ -48,7 +48,7 @@ if [ ! -z "$BUCKETEER_BUCKET_NAME" ]; then
     S3_SOURCE="s3-data"
     mkdir -p $S3_SOURCE
     echo ">>> Dumping S3 bucket at $BUCKETEER_BUCKET_NAME..."
-    aws s3 sync s3://$BUCKETEER_BUCKET_NAME $S3_SOURCE/
+    aws s3 sync --quiet s3://$BUCKETEER_BUCKET_NAME $S3_SOURCE/
     echo
 
     echo ">>> Backing up S3 to Tarsnap..."
