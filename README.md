@@ -83,17 +83,7 @@ That's it! Your Heroku app is now being backed up.
 
 ## Restoring backups
 
-You'll need to use the key file you created when setting up the app.
-
-First, list the available archives:
-
-    $ tarsnap --keyfile tarsnap.key --list-archives
-
-Then, you can save a tarball of an archive with this command:
-
-    $ tarsnap --keyfile tarsnap.key -r -f your-app-backup/some-archive-name > restore.tar
-
-(Note: A `bin/restore` script does exist in the Heroku app to simplify this, but unfortunately `heroku run` mangles stdout so we can't get a tarball.)
+See gitbook.
 
 ## Configuration reference
 

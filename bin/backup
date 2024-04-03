@@ -37,7 +37,7 @@ if [ ! -z "$DATABASE_URL" ]; then
     echo
 
     echo ">>> Backing up Postgres DB to Tarsnap..."
-    tarsnapper -o keyfile $TARSNAP_KEY_PATH -o cachedir $TARSNAP_CACHE_DIR --sources "$POSTGRES_SOURCE" --target "$APP_NAME/postgres-\$date" --deltas $TARSNAPPER_DELTAS - make
+    tarsnapper -o print-stats -o keyfile $TARSNAP_KEY_PATH -o cachedir $TARSNAP_CACHE_DIR --sources "$POSTGRES_SOURCE" --target "$APP_NAME/postgres-\$date" --deltas $TARSNAPPER_DELTAS - make
     echo
 fi
 
